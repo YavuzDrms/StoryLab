@@ -4,6 +4,7 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import DeclarativeBase
+import sqlite3
 
 engine = create_engine("sqlite:///./database.db", connect_args={"check_same_thread": False})
 local_session = sessionmaker(bind=engine)
@@ -45,3 +46,18 @@ def log_data(data: DataModel):
     ))
     db.commit()
     db.close()
+
+def clear_database():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("DELETE FROM messages")
+    
+    try:
+        cursor.execute("DELETE FROM sqlite_sequence WHERE name='messages'")
+    except sqlite3.OperationalError:
+        pass
+    
+    conn.commit()
+    conn.close()
+    print("Database succesfuly cleared")

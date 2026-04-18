@@ -18,3 +18,4 @@ def show_connection_error():
     response = msg.get()
     if response == "Exit":
         sys.exit(0)
+        
