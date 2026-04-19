@@ -1,9 +1,13 @@
 from dotenv import load_dotenv
 import os
 import groq
+from customtkinter import StringVar
+from enum import Enum
+
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-ai_model = os.getenv("AI_MODEL")
+ai_model_llama = os.getenv("AI_MODEL_LLAMA")
+ai_model_gpt = os.getenv("openai/gpt-oss-120b")
 
 system_prompt = (
     "Sen Türk edebiyatına hakim, usta bir yazarsın. "
@@ -19,17 +23,29 @@ system_prompt = (
     "Eğer paragrafta {} yoksa görmezden gel."
 )
 
+class Models(Enum):
+    LLAMA = 1
+    GPT = 2
+
 def generate_prompt(input) -> str:
     sys = system_prompt
-    prompt = f"{system_prompt}\nHikaye: {input}"
+    prompt = f"{sys}\nHikaye: {input}"
     return prompt
 
 client = groq.Groq(api_key=GROQ_API_KEY)
 
+ai_model_selected : Models = Models.LLAMA
+
 def get_ai_response(prompt: str, input: str):
+    m: str
+    if ai_model_selected.name == "LLAMA":
+        m = ai_model_llama
+    if ai_model_selected.name == "GPT":
+        m = ai_model_gpt
+    
     try:
         response = client.chat.completions.create(
-            model=ai_model,
+            model=m,
             messages=[{"role":"user","content":prompt}]
         )
         res = f"{input} {response.choices[0].message.content}"

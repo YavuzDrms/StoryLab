@@ -124,6 +124,16 @@ btn_showschats = customtkinter.CTkButton(app, text="Show past chats", command=sh
 btn_cleardatabase = customtkinter.CTkButton(app, text="Clear past chats", command=database.clear_database, width=100, height=45, corner_radius=15,
                                             font=("Inter", 16, "bold"))
 
+def modelmenu_callback(choice):
+    selected_model = choice
+    if selected_model == "gpt":
+        ai.ai_model_selected = ai.Models.GPT
+    if selected_model == "llama":
+        ai.ai_model_selected = ai.Models.LLAMA
+
+selected_model = customtkinter.StringVar(value="llama")
+modelmenu_option = customtkinter.CTkOptionMenu(app, values=["llama", "gpt"], command=modelmenu_callback)
+
 lightmode.place(relx=0.02, rely=0.95, anchor="sw")
 txt_storylab.pack()
 txt_howtouse.pack()
@@ -133,4 +143,5 @@ btn_generate.place(relx=0.5, rely=0.5, anchor="center")
 ai_response.place(relx=0.5, rely=0.72, anchor="center")
 btn_showschats.place(relx=0.4, rely=1, anchor="sw")
 btn_cleardatabase.place(relx=0.6, rely=1, anchor="sw")
+modelmenu_option.place(relx=0.0, rely=0.98, anchor="sw")
 app.mainloop()
