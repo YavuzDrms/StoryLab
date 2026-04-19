@@ -126,13 +126,13 @@ btn_cleardatabase = customtkinter.CTkButton(app, text="Clear past chats", comman
 
 def modelmenu_callback(choice):
     selected_model = choice
-    if selected_model == "gpt":
-        ai.ai_model_selected = ai.Models.GPT
-    if selected_model == "llama":
-        ai.ai_model_selected = ai.Models.LLAMA
+    if selected_model == "llama-3.1":
+        ai.ai_model_selected = ai.Models.LLAMA31
+    if selected_model == "llama-3.3":
+        ai.ai_model_selected = ai.Models.LLAMA33
 
 selected_model = customtkinter.StringVar(value="llama")
-modelmenu_option = customtkinter.CTkOptionMenu(app, values=["llama", "gpt"], command=modelmenu_callback)
+modelmenu_option = customtkinter.CTkOptionMenu(app, values=["llama-3.3", "llama-3.1"], command=modelmenu_callback)
 
 lightmode.place(relx=0.02, rely=0.95, anchor="sw")
 txt_storylab.pack()

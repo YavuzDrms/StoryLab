@@ -6,8 +6,8 @@ from enum import Enum
 
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-ai_model_llama = os.getenv("AI_MODEL_LLAMA")
-ai_model_gpt = os.getenv("openai/gpt-oss-120b")
+ai_model_llama33 = os.getenv("AI_MODEL_LLAMA33")
+ai_model_llama31 = os.getenv("AI_MODEL_LLAMA31")
 
 system_prompt = (
     "Sen Türk edebiyatına hakim, usta bir yazarsın. "
@@ -24,8 +24,8 @@ system_prompt = (
 )
 
 class Models(Enum):
-    LLAMA = 1
-    GPT = 2
+    LLAMA33 = 1
+    LLAMA31 = 2
 
 def generate_prompt(input) -> str:
     sys = system_prompt
@@ -34,14 +34,14 @@ def generate_prompt(input) -> str:
 
 client = groq.Groq(api_key=GROQ_API_KEY)
 
-ai_model_selected : Models = Models.LLAMA
+ai_model_selected : Models = Models.LLAMA33
 
 def get_ai_response(prompt: str, input: str):
     m: str
-    if ai_model_selected.name == "LLAMA":
-        m = ai_model_llama
-    if ai_model_selected.name == "GPT":
-        m = ai_model_gpt
+    if ai_model_selected.name == "LLAMA33":
+        m = ai_model_llama33
+    if ai_model_selected.name == "LLAMA31":
+        m = ai_model_llama31
     
     try:
         response = client.chat.completions.create(
